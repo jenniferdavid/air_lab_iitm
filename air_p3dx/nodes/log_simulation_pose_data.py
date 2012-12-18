@@ -84,19 +84,18 @@ class LogSimulationPoseData(QDialog):
         '''
         lines = open(self.__log_name, 'r').read().splitlines()
         [x0, y0, theta0] = [float(j) for j in lines[1].split()]
+        theta0 = (math.pi * theta0) / 180  # theta0 in radians
         # plot map data
         for i in range(lines.index('[RAW MAP DATA BEGIN]') + 1, lines.index('[RAW MAP DATA END]')):
             x = [float(j) - x0 for j in lines[i].split()[::2]]
             y = [float(j) - y0 for j in lines[i].split()[1::2]]
-            plt.plot(x, y)
+            plt.plot(x, y, 'k', 3)
         # plot pose data
-        x = [float(j) for j in lines[lines.index('[RAW POSE DATA BEGIN]') + 1].split()]
-        y = [float(j) for j in lines[lines.index('[RAW POSE DATA BEGIN]') + 2].split()]
-        x_new = [i - j for i in [x_i * math.cos((math.pi * theta0) / 180) for x_i in x] 
-                       for j in [y_i * math.sin((math.pi * theta0) / 180) for y_i in y]] 
-        y_new = [i + j for i in [x_i * math.sin((math.pi * theta0) / 180) for x_i in x] 
-                       for j in [y_i * math.cos((math.pi * theta0) / 180) for y_i in y]] 
-        plt.plot(x_new, y_new) 
+        x = [float(i) for i in lines[lines.index('[RAW POSE DATA BEGIN]') + 1].split()]
+        y = [float(i) for i in lines[lines.index('[RAW POSE DATA BEGIN]') + 2].split()]
+        x_new = [i - j for i, j in zip([xi * math.cos(theta0) for xi in x], [yi * math.sin(theta0) for yi in y])] 
+        y_new = [i + j for i, j in zip([xi * math.sin(theta0) for xi in x], [yi * math.cos(theta0) for yi in y])]
+        plt.plot(x_new, y_new, 'b', 1) 
         plt.show()
     
     def __getInitialPose(self):
