@@ -1,0 +1,19 @@
+<package>
+  <description brief="air_p3dx">
+
+     air_p3dx
+
+  </description>
+  <author>Ashish Ranjan</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/air_p3dx</url>
+  <depend package="roscpp"/>
+  <depend package="rospy"/>
+  <depend package="geometry_msgs"/>
+  <depend package="nav_msgs"/>
+  <depend package="sensor_msgs"/>
+
+</package>
+
+

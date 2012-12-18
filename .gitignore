@@ -1,0 +1,24 @@
+##### ranjanashish: air_lab_iitm Ignore List #####
+
+# ignore all files in the bin/ directory
+bin/
+# ignore all files in the CMakeFiles/ directory
+CMakeFiles/
+# ignore CMakeCache.txt file
+CMakeCache.txt
+# ignore cmake_install.cmake file
+cmake_install.cmake
+# ignore all files in the .settings/ directory
+.settings/
+# ignore .classpath file
+.classpath
+# ignore .project file
+.project
+# ignore .cproject file
+.cproject
+# ignore .pydevproject file
+.pydevproject
+
+# ignore standard stuff
+*~
+*.o

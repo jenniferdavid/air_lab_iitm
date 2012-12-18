@@ -1,0 +1,10 @@
+<stack>
+	<description brief="air_lab_iitm">
+		A ROS stack for AIR Lab at IIT Madras.
+	</description>
+	<author>Ashish Ranjan</author>
+	<license>BSD</license>
+	<review status="unreviewed" notes=""/>
+	<url></url>
+	<depend stack="ros"/>
+</stack>
