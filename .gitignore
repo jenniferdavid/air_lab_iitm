@@ -1,24 +1,29 @@
 ##### ranjanashish: air_lab_iitm Ignore List #####
 
-# ignore all files in the bin/ directory
+# ignore all files in the these directories
 bin/
-# ignore all files in the CMakeFiles/ directory
+build/
+catkin/
+catkin_generated/
 CMakeFiles/
-# ignore CMakeCache.txt file
-CMakeCache.txt
-# ignore cmake_install.cmake file
-cmake_install.cmake
-# ignore all files in the .settings/ directory
+devel/
+gtest/
+lib/
+msg_gen/
+srv_gen/
 .settings/
-# ignore .classpath file
+
+# ignore all these files
+CATKIN_IGNORE
+CMakeCache.txt
+cmake_install.cmake
+Makefile
 .classpath
-# ignore .project file
-.project
-# ignore .cproject file
 .cproject
-# ignore .pydevproject file
+.project
 .pydevproject
 
 # ignore standard stuff
 *~
 *.o
+*.pyc
