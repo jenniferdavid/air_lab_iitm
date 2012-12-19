@@ -3,18 +3,16 @@ import roslib; roslib.load_manifest('air_p3dx')
 import rospy
 from nav_msgs.msg import Odometry
 
-import sys
 import os
+import sys
 import math
-import numpy as np
 import matplotlib.pyplot as plt
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
+from PyQt4.uic import *
 
-from ui_logSimulationPoseDataDialog import Ui_logSimulationPoseDataDialog
-
-class LogSimulationPoseData(QDialog):
+class LogSimulationPoseDataDialog(QDialog):
     '''
     A class to handle GUI and background calculations for logging pose data
     '''
@@ -22,16 +20,16 @@ class LogSimulationPoseData(QDialog):
         '''
         Initialize
         '''
-        QDialog.__init__(self)       
-        self.ui = Ui_logSimulationPoseDataDialog()
-        self.ui.setupUi(self)
-        self.ui.pushButton_ok.clicked.connect(self.onClickPushButton_ok)
-        self.ui.pushButton_cancel.clicked.connect(self.onClickPushButton_cancel)
-        self.ui.pushButton_browse_map.clicked.connect(self.onClickPushButton_browse_map)
-        self.ui.pushButton_browse_log.clicked.connect(self.onClickPushButton_browse_log)
-        self.ui.pushButton_start_logging.clicked.connect(self.onClickPushButton_start_logging)
-        self.ui.pushButton_stop_logging.clicked.connect(self.onClickPushButton_stop_logging)
-        self.ui.pushButton_generate_graph.clicked.connect(self.onClickPushButton_generate_graph)
+        QDialog.__init__(self)
+        self.ui = loadUi(os.path.dirname(os.path.realpath(__file__)) + '/log_simulation_pose_data.ui')
+        self.ui.show()
+        self.connect(self.ui.pushButton_ok, SIGNAL('clicked()'), self.onClickPushButton_ok)
+        self.connect(self.ui.pushButton_cancel, SIGNAL('clicked()'), self.onClickPushButton_cancel)
+        self.connect(self.ui.pushButton_browse_map, SIGNAL('clicked()'), self.onClickPushButton_browse_map)
+        self.connect(self.ui.pushButton_browse_log, SIGNAL('clicked()'), self.onClickPushButton_browse_log)
+        self.connect(self.ui.pushButton_start_logging, SIGNAL('clicked()'), self.onClickPushButton_start_logging)
+        self.connect(self.ui.pushButton_stop_logging, SIGNAL('clicked()'), self.onClickPushButton_stop_logging)
+        self.connect(self.ui.pushButton_generate_graph, SIGNAL('clicked()'), self.onClickPushButton_generate_graph)
         
         self.__map_name = ""
         self.__log_name = ""
@@ -146,8 +144,7 @@ class LogSimulationPoseData(QDialog):
         
 def main():
     app = QApplication(sys.argv)
-    window = LogSimulationPoseData()  
-    window.show()
+    dialog = LogSimulationPoseDataDialog()
     sys.exit(app.exec_())
     
 if __name__ == '__main__':
