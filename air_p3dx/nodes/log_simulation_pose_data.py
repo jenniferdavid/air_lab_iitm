@@ -20,6 +20,9 @@ class LogSimulationPoseDataDialog(QDialog):
         '''
         Initialize
         '''
+        #=======================================================================
+        # Front end
+        #=======================================================================
         QDialog.__init__(self)
         self.ui = loadUi(os.path.dirname(os.path.realpath(__file__)) + '/log_simulation_pose_data.ui')
         self.ui.show()
@@ -30,7 +33,9 @@ class LogSimulationPoseDataDialog(QDialog):
         self.connect(self.ui.pushButton_start_logging, SIGNAL('clicked()'), self.onClickPushButton_start_logging)
         self.connect(self.ui.pushButton_stop_logging, SIGNAL('clicked()'), self.onClickPushButton_stop_logging)
         self.connect(self.ui.pushButton_generate_graph, SIGNAL('clicked()'), self.onClickPushButton_generate_graph)
-        
+        #=======================================================================
+        # Back end
+        #=======================================================================
         self.__map_name = ""
         self.__log_name = ""
         self.__x_odometry = []  # in meters
@@ -43,7 +48,7 @@ class LogSimulationPoseDataDialog(QDialog):
         '''
         Quit the application
         '''
-        pass
+        QApplication.quit()
 
     def onClickPushButton_browse_map(self):
         '''
@@ -81,8 +86,8 @@ class LogSimulationPoseDataDialog(QDialog):
         Generate graph from the logged data
         '''
         lines = open(self.__log_name, 'r').read().splitlines()
-        [x0, y0, theta0] = [float(j) for j in lines[1].split()]
-        theta0 = (math.pi * theta0) / 180  # theta0 in radians
+        x0, y0, theta0 = [float(j) for j in lines[1].split()]
+        theta0 = math.radians(theta0)  # theta0 in radians
         # plot map data
         for i in range(lines.index('[RAW MAP DATA BEGIN]') + 1, lines.index('[RAW MAP DATA END]')):
             x = [float(j) - x0 for j in lines[i].split()[::2]]
