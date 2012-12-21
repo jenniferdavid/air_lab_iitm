@@ -64,11 +64,12 @@ class PlotSimulationPoseDataDialog(QDialog):
             lines = open(self.__log_name[i]).read().splitlines()
             x0, y0, theta0 = [float(j) for j in lines[1].split()]
             theta0 = (math.pi * theta0) / 180  # theta0 in radians
-            x = [float(i) for i in lines[lines.index('[RAW POSE DATA BEGIN]') + 1].split()]
-            y = [float(i) for i in lines[lines.index('[RAW POSE DATA BEGIN]') + 2].split()]
-            x_new = [i - j for i, j in zip([xi * math.cos(theta0) for xi in x], [yi * math.sin(theta0) for yi in y])] 
-            y_new = [i + j for i, j in zip([xi * math.sin(theta0) for xi in x], [yi * math.cos(theta0) for yi in y])]
-            plt.plot(x_new, y_new) 
+            x = [float(m) for m in lines[lines.index('[RAW POSE DATA BEGIN]') + 1].split()]
+            y = [float(m) for m in lines[lines.index('[RAW POSE DATA BEGIN]') + 2].split()]
+            x_new = [m - n for m, n in zip([xi * math.cos(theta0) for xi in x], [yi * math.sin(theta0) for yi in y])] 
+            y_new = [m + n for m, n in zip([xi * math.sin(theta0) for xi in x], [yi * math.cos(theta0) for yi in y])]
+            plt.plot(x_new, y_new, label=os.path.splitext(os.path.basename(str(self.__log_name[i])))[0])
+        plt.legend()
         plt.show()
 
 def main():
