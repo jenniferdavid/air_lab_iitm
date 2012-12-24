@@ -30,21 +30,24 @@ Dependency
 
 Installation
 ------------
-1. air_amigo
-```bash
-$ rosdep install air_amigo
-$ rosmake air_amigo
-```
-2. air_kinect
-```bash
-$ rosdep install air_kinect
-$ rosmake air_kinect
-```
-3. air_p3dx
-```bash
-$ rosdep install air_p3dx
-$ rosmake air_p3dx
-```
+1.  air_amigo
+
+	```
+	$ rosdep install air_amigo
+	$ rosmake air_amigo
+	```
+2.  air_kinect
+
+	```
+	$ rosdep install air_kinect
+	$ rosmake air_kinect
+	```
+3. 	air_p3dx
+
+	```
+	$ rosdep install air_p3dx
+	$ rosmake air_p3dx
+	```
 
 Known Issues
 ------------
