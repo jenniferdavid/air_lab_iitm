@@ -69,13 +69,16 @@ class PlotSimulationPoseDataDialog(QDialog):
             x_new = [m - n for m, n in zip([xi * math.cos(theta0) for xi in x], [yi * math.sin(theta0) for yi in y])] 
             y_new = [m + n for m, n in zip([xi * math.sin(theta0) for xi in x], [yi * math.cos(theta0) for yi in y])]
             plt.plot(x_new, y_new, label=os.path.splitext(os.path.basename(str(self.__log_name[i])))[0])
+        plt.grid(True)
+        plt.axis('equal')
         plt.legend()
+        plt.title('Simulation Pose Data')
         plt.show()
 
 def main():
     app = QApplication(sys.argv)
     dialog = PlotSimulationPoseDataDialog()
     sys.exit(app.exec_())
-    
+
 if __name__ == '__main__':
     main()

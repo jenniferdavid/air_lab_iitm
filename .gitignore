@@ -3,22 +3,11 @@
 # ignore all files in the these directories
 bin/
 build/
-catkin/
-catkin_generated/
-CMakeFiles/
-devel/
-gtest/
-lib/
 msg_gen/
 srv_gen/
 .settings/
 
 # ignore all these files
-CATKIN_IGNORE
-CMakeCache.txt
-cmake_install.cmake
-Makefile
-.classpath
 .cproject
 .project
 .pydevproject
