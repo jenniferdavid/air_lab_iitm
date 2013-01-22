@@ -2,6 +2,7 @@
 import os
 import sys
 import math
+import matplotlib
 import matplotlib.pyplot as plt
 
 from PyQt4.QtCore import *
@@ -68,11 +69,14 @@ class PlotSimulationPoseDataDialog(QDialog):
             y = [float(m) for m in lines[lines.index('[RAW POSE DATA BEGIN]') + 2].split()]
             x_new = [m - n for m, n in zip([xi * math.cos(theta0) for xi in x], [yi * math.sin(theta0) for yi in y])] 
             y_new = [m + n for m, n in zip([xi * math.sin(theta0) for xi in x], [yi * math.cos(theta0) for yi in y])]
-            plt.plot(x_new, y_new, label=os.path.splitext(os.path.basename(str(self.__log_name[i])))[0])
+            plt.plot(x_new, y_new, label=os.path.splitext(os.path.basename(str(self.__log_name[i])))[0] + " m/s")
         plt.grid(True)
         plt.axis('equal')
         plt.legend()
         plt.title('Simulation Pose Data')
+        plt.xlabel('x axis (in mm)')
+        plt.ylabel('y axis (in mm)')
+        matplotlib.rcParams.update({'font.size': 22})
         plt.show()
 
 def main():
