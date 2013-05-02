@@ -36,3 +36,14 @@ rosbuild_add_executable(display_sonar_readings src/display_sonar_readings.cpp)
 # Plot Odometry Data: ROS Node
 ##################################
 #rosbuild_add_executable(plot_odometry_data src/plot_odometry_data.cpp)
+
+# Neural Network Training
+##################################
+rosbuild_add_executable(nn_training src/nn_training.cpp)
+target_link_libraries(nn_training boost_filesystem boost_system fann)
+
+# Neural Network Execution
+##################################
+rosbuild_add_executable(nn_execution src/nn_execution.cpp)
+target_link_libraries(nn_execution boost_filesystem boost_system fann)
+
