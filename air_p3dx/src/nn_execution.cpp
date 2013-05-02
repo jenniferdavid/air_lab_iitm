@@ -3,6 +3,8 @@
 #include "geometry_msgs/Twist.h"
 
 #include <cmath>
+#include <string>
+#include <boost/filesystem.hpp>
 
 #include <floatfann.h>
 #include <fann_cpp.h>
@@ -18,8 +20,17 @@ void sonarCallback(const sensor_msgs::PointCloud::ConstPtr& point_cloud_msg)
 
 int main(int argc, char **argv)
 {
+    boost::filesystem::path current_dir(boost::filesystem::current_path());
+    std::string trained_neural_network_file = current_dir.string() + "/neural_network_controller_float.net";
+
+    if (!boost::filesystem::exists(trained_neural_network_file))
+    {
+        std::cout << "File `" << trained_neural_network_file + "` does not exist!\nAborting." << std::endl;
+        exit(1);
+    }
+
     FANN::neural_net net;
-    net.create_from_file("/home/jalan/ros_workspace/ashish_repo/p3dx_rosaria/src/neural_network_controller_float.net");
+    net.create_from_file(trained_neural_network_file);
 
     ros::init(argc, argv, "nn_controller");
     ros::NodeHandle nodeHandle1;
@@ -27,14 +38,14 @@ int main(int argc, char **argv)
     ros::Subscriber subscriber = nodeHandle1.subscribe("/RosAria/sonar", 1000, sonarCallback);
     ros::Publisher publisher = nodeHandle2.advertise<geometry_msgs::Twist>("/RosAria/cmd_vel", 1000);
 
-    ros::Rate loop_rate(10);
-
     geometry_msgs::Twist twist;
     twist.linear.x = 0.1;
     twist.linear.y = 0;
     twist.linear.z = 0;
     twist.angular.x = 0;
     twist.angular.y = 0;
+
+    ros::Rate loop_rate(10); // run the loop at 10Hz
 
     while (ros::ok())
     {
