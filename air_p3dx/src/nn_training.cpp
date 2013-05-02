@@ -11,14 +11,9 @@
 #include <iomanip>
 #include <string>
 #include <boost/filesystem.hpp>
-using std::cout;
-using std::endl;
-using std::setw;
-using std::left;
-using std::right;
 
 #define INIT_EPSILON 0.1
-
+#define DESIRED_ERROR 0.0001
 /**
  * Callback function that simply prints the training information to stdout.
  *
@@ -33,7 +28,7 @@ using std::right;
  */
 int printCallback(FANN::neural_net &net, FANN::training_data &data, unsigned int max_epochs, unsigned int epochs_between_reports, float desired_error, unsigned int epochs, void *user_data)
 {
-    cout << "Epochs      " << setw(8) << epochs << ". " << "Current Error: " << left << net.get_MSE() << right << endl;
+    std::cout << "Epochs      " << std::setw(8) << epochs << ". " << "Current Error: " << std::left << net.get_MSE() << std::right << std::endl;
 
     return 0;
 }
@@ -64,7 +59,7 @@ void neuralNetworkTraining(std::string training_data_file)
      */
     const unsigned int max_epochs = 500000;
     const unsigned int epochs_between_reports = 1000;
-    const float desired_error = 0.0003;
+    const float desired_error = DESIRED_ERROR;
 
     FANN::neural_net net;
     // Create a standard fully connected backpropagation neural network.
@@ -75,31 +70,31 @@ void neuralNetworkTraining(std::string training_data_file)
     net.set_training_algorithm(FANN::TRAIN_RPROP);                        // Set the training algorithm.
     net.randomize_weights(-INIT_EPSILON, INIT_EPSILON);                   // Give each connection a random weight between -INIT_EPSILON and INIT_EPSILON.
 
-    cout << endl << "Network Type                         :  ";
+    std::cout << std::endl << "Network Type                         :  ";
     switch (net.get_network_type())
     {
     case FANN::LAYER:
-        cout << "LAYER" << endl;
+        std::cout << "LAYER" << std::endl;
         break;
     case FANN::SHORTCUT:
-        cout << "SHORTCUT" << endl;
+        std::cout << "SHORTCUT" << std::endl;
         break;
     default:
-        cout << "UNKNOWN" << endl;
+        std::cout << "UNKNOWN" << std::endl;
         break;
     }
     net.print_parameters();
 
-    cout << endl << "Training Network." << endl;
+    std::cout << std::endl << "Training Network." << std::endl;
     FANN::training_data data;
     if (data.read_train_from_file(training_data_file))
     {
-        cout << "Max Epochs: " << setw(8) << max_epochs << ". " << "Desired Error: " << left << desired_error << right << endl;
+        std::cout << "Max Epochs: " << std::setw(8) << max_epochs << ". " << "Desired Error: " << std::left << desired_error << std::right << std::endl;
 
-        net.set_callback(printCallback, NULL);	// Sets the callback function for use during training.
-        net.train_on_data(data, max_epochs, epochs_between_reports, desired_error);	// Trains on an entire dataset, for a period of time.
+        net.set_callback(printCallback, NULL);                                      // Sets the callback function for use during training.
+        net.train_on_data(data, max_epochs, epochs_between_reports, desired_error); // Trains on an entire dataset, for a period of time.
 
-        cout << "Saving Network." << endl;
+        std::cout << "Saving Network." << std::endl;
         net.save("neural_network_controller_float.net");
         unsigned int decimal_point = net.save_to_fixed("neural_network_controller_fixed.net");
         data.save_train_to_fixed("neural_network_controller_fixed.data", decimal_point);
