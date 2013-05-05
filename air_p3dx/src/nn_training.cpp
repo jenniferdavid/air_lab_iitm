@@ -14,6 +14,9 @@
 
 #define INIT_EPSILON 0.1
 #define DESIRED_ERROR 0.0001
+#define MAX_EPOCHS 500000
+#define EPOCHS_BETWEEN_REPORTS 1000
+
 /**
  * Callback function that simply prints the training information to stdout.
  *
@@ -44,26 +47,25 @@ void neuralNetworkTraining(std::string training_data_file)
      * num_hidden_two_neurons : The number of neurons in the second hidden layer.
      * num_output_neurons     : The number of neurons in the output layer.
      */
-    const unsigned int num_layers = 4;
+    const unsigned int num_layers = 3;
     const unsigned int num_input_neurons = 8;
-    const unsigned int num_hidden_one_neurons = 15;
-    const unsigned int num_hidden_two_neurons = 15;
+    const unsigned int num_hidden_neurons = 5;
     const unsigned int num_output_neurons = 1;
 
     /*
      * Parameters for train_on_data method.
      *
-     * max_epochs            : The maximum number of epochs the training should continue.
-     * epochs_between_reports: The number of epochs between printing a status report to stdout. A value of zero means no reports should be printed.
-     * desired_erros         : The desired get_MSE or get_bit_fail, depending on which stop function is chosen by set_train_stop_function.
+     * desired_errors         : The desired get_MSE or get_bit_fail, depending on which stop function is chosen by set_train_stop_function.
+     * max_epochs             : The maximum number of epochs the training should continue.
+     * epochs_between_reports : The number of epochs between printing a status report to stdout. A value of zero means no reports should be printed.
      */
-    const unsigned int max_epochs = 500000;
-    const unsigned int epochs_between_reports = 1000;
     const float desired_error = DESIRED_ERROR;
+    const unsigned int max_epochs = MAX_EPOCHS;
+    const unsigned int epochs_between_reports = EPOCHS_BETWEEN_REPORTS;
 
     FANN::neural_net net;
     // Create a standard fully connected backpropagation neural network.
-    net.create_standard(num_layers, num_input_neurons, num_hidden_one_neurons, num_hidden_two_neurons, num_output_neurons);
+    net.create_standard(num_layers, num_input_neurons, num_hidden_neurons, num_output_neurons);
 
     net.set_activation_function_hidden(FANN::SIGMOID_SYMMETRIC_STEPWISE); // Set the activation function for all of the hidden layers.
     net.set_activation_function_output(FANN::SIGMOID_SYMMETRIC_STEPWISE); // Set the activation function for the output layer.
