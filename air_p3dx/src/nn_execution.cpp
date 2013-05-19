@@ -35,8 +35,8 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "nn_controller");
     ros::NodeHandle nodeHandle1;
     ros::NodeHandle nodeHandle2;
-    ros::Subscriber subscriber = nodeHandle1.subscribe("/RosAria/sonar", 1000, sonarCallback);
-    ros::Publisher publisher = nodeHandle2.advertise<geometry_msgs::Twist>("/RosAria/cmd_vel", 1000);
+    ros::Subscriber subscriber = nodeHandle1.subscribe("/RosAria/sonar", 100, sonarCallback);
+    ros::Publisher publisher = nodeHandle2.advertise<geometry_msgs::Twist>("/RosAria/cmd_vel", 100);
 
     geometry_msgs::Twist twist;
     twist.linear.x = 0.1;
@@ -45,7 +45,7 @@ int main(int argc, char **argv)
     twist.angular.x = 0;
     twist.angular.y = 0;
 
-    ros::Rate loop_rate(10); // run the loop at 10Hz
+    ros::Rate loop_rate(1000); // run the loop at 1000Hz
 
     while (ros::ok())
     {

@@ -31,6 +31,7 @@ class PlotSimulationPoseDataDialog(QDialog):
         # Back end
         #=======================================================================
         self.__log_name = []
+        self.__plot_styles = ['r--', 'k-.', 'g']
         
     def onClickPushButton_ok(self):
         pass
@@ -59,7 +60,7 @@ class PlotSimulationPoseDataDialog(QDialog):
         for i in range(lines.index('[RAW MAP DATA BEGIN]') + 1, lines.index('[RAW MAP DATA END]')):
             x = [float(j) - x0 for j in lines[i].split()[::2]]
             y = [float(j) - y0 for j in lines[i].split()[1::2]]
-            plt.plot(x, y, 'k', linewidth=3.5)
+            plt.plot(x, y, 'k', linewidth=5)
         # plot pose data
         for i in range(len(self.__log_name)):
             lines = open(self.__log_name[i]).read().splitlines()
@@ -69,11 +70,11 @@ class PlotSimulationPoseDataDialog(QDialog):
             y = [float(m) for m in lines[lines.index('[RAW POSE DATA BEGIN]') + 2].split()]
             x_new = [m - n for m, n in zip([xi * math.cos(theta0) for xi in x], [yi * math.sin(theta0) for yi in y])] 
             y_new = [m + n for m, n in zip([xi * math.sin(theta0) for xi in x], [yi * math.cos(theta0) for yi in y])]
-            plt.plot(x_new, y_new, linewidth=2.5, label=os.path.splitext(os.path.basename(str(self.__log_name[i])))[0] + " m/s")
+            plt.plot(x_new, y_new, self.__plot_styles[i], linewidth=3.5, label=os.path.splitext(os.path.basename(str(self.__log_name[i])))[0] + " m/s")
         plt.grid(True)
         plt.axis('equal')
         plt.legend()
-        plt.title('Simulation Pose Data')
+        plt.title('Experiment Pose Data')
         plt.xlabel('x axis (in mm)')
         plt.ylabel('y axis (in mm)')
         matplotlib.rcParams.update({'font.size': 16})
